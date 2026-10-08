@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.alanturing.tipcalculator.R
-import com.alanturing.tipcalculator.ui.theme.TipCalculatorTheme
 
 
 
@@ -63,10 +62,11 @@ fun TipCalculatorScreen(
                 modifier = textFieldsModifier,
                 value = state.amount,
                 keyboardOptions = customQuantityKeyboardOptions,
-                onValueChange = {
+                onValueChange = viewModel::updateAmount
+                /*{
                     newText ->
                     //totalAmount = newText
-                },
+                }*/,
             )
             val customGuestKeyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number
@@ -75,7 +75,7 @@ fun TipCalculatorScreen(
                 value = state.guests,
                 modifier = textFieldsModifier,
                 keyboardOptions = customGuestKeyboardOptions,
-                onValueChange = {},
+                onValueChange = viewModel::updateGuest,
             )
             Row(
                 modifier = Modifier
@@ -96,9 +96,10 @@ fun TipCalculatorScreen(
             Slider(
                 enabled = state.tip,
                 value = state.tipAmount,
-                onValueChange = {
+                onValueChange = viewModel::updateTipAmount
+                /*{
                     //tipValue = it
-                },
+                }*/,
                 steps = 3,
                 valueRange = 0f..4f
 
@@ -112,7 +113,6 @@ fun TipCalculatorScreen(
             //    guestNumber > 0 && totalAmount > 0.0
              //else
             //    false
-
             Button(
                 enabled = state.isCaculateEnabled,
                 modifier = Modifier.fillMaxWidth(),
@@ -137,11 +137,4 @@ fun TipCalculatorScreen(
                 Text(stringResource(R.string.splitLabel, state.result));
     }
 }
-}
-@Composable
-@Preview
-fun TipCalculatorScreenPreview() {
-    TipCalculatorTheme {
-        TipCalculatorScreen()
-    }
 }
